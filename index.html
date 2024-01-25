@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = 'viewport' content="width=device-width,initial-scale=1" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=7,8,edge" />
+        <meta charset = 'UTF-8' />
+        
+        <title>Hangman Game</title>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+    </head>
+<body>
+    <main>
+        <div id="gameBox">
+            <h1>HANGMAN</h1>
+            <div class="info">
+                <span class='attempt'>Attempts: 0</span>
+                <span class='guesses'>Guesses: 0</span>
+            </div>
+            <div id="letterBox"></div>
+        </div>
+        
+        <table class="keyboard">
+            <tr>
+                <td><button>Q</button></td>
+                <td><button>w</button></td>
+                <td><button>E</button></td>
+                <td><button>R</button></td>
+                <td><button>T</button></td>
+                <td><button>Y</button></td>
+                <td><button>U</button></td>
+                <td><button>I</button></td>
+                <td><button>O</button></td>
+                <td><button>P</button></td>
+            </tr>
+            <tr>
+                <td><button>A</button></td>
+                <td><button>S</button></td>
+                <td><button>D</button></td>
+                <td><button>F</button></td>
+                <td><button>G</button></td>
+                <td><button>H</button></td>
+                <td><button>J</button></td>
+                <td><button>K</button></td>
+                <td><button>L</button></td>
+            </tr>
+            <tr>
+                <td><button>Z</button></td>
+                <td><button>X</button></td>
+                <td><button>C</button></td>
+                <td><button>V</button></td>
+                <td><button>B</button></td>
+                <td><button>N</button></td>
+                <td><button>M</button></td>
+            </tr>
+        </table>
+        
+        <button id = "startBtn">Play</button>
+    </main>
+</body>
+<script src="./app.js"></script>
+</html>
