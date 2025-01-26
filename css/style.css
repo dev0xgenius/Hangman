@@ -1,0 +1,154 @@
+*,
+*:after,
+*:before {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+body {
+  background-color: whitesmoke;
+  font-family: Monospace;
+}
+
+main {
+  height: auto;
+  margin-top: 150px;
+}
+
+#gameBox {
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+  height: auto;
+  padding: 20px;
+  margin: 10px auto;
+  border-radius: 8px;
+  background-color: black;
+}
+
+#gameBox h1 {
+  display: block;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  letter-spacing: -5px;
+  font-variant: small-caps;
+  font-size: 35px;
+  color: rgba(200, 200, 200, 0.5);
+  z-index: -100;
+}
+
+#gameBox div.info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  top: 0; right: 0;
+  padding: 0.5rem;
+}
+
+#gameBox div.info span {
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background-color: whitesmoke;
+}
+
+#gameBox:before {
+  content: '@0xgenius__';
+  margin: 0 auto;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: white;
+}
+
+#letterBox {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  
+}
+
+#letterBox [class *="letter"] {
+  display: block;
+  width: inherit;
+  padding: 8px;
+  margin-right: 4px;
+  margin-top: 0px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  border-bottom: 2px ridge white;
+}
+
+.keyboard {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: none;
+  background-color: whitesmoke;
+}
+
+.keyboard tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.keyboard button {
+  display: block;
+  width: 35px;
+  height: 50px;
+  margin: 1.5px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  font-family: Monospace;
+  font-size: 20px;
+  border-radius: 8px;
+  border: 1px solid black;
+  outline: none;
+  color: black;
+  background-color: transparent;
+  box-shadow: -1px 1px 2px lightgrey;
+}
+
+.keyboard button[disabled='disabled'] {
+  transition: 0.1s ease-in;
+  color: white;
+  background-color: black;
+}
+
+#startBtn {
+  display: block;
+  width: 200px;
+  height: auto;
+  padding: 10px;
+  margin: 10px auto;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  font-family: Monospace;
+  font-weight: Bold;
+  letter-spacing: 2px;
+  color: white;
+  background-color: black;
+}
+
+#startBtn:active {
+  transition: 0.2s ease-in;
+  /* border: 1px solid black; */
+  color: black;
+  background-color: transparent;
+}
