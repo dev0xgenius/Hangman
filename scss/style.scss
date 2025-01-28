@@ -80,10 +80,10 @@ main {
       background-color: whitesmoke;
       overflow: hidden;
       
-      &:before {
-        display: block;
+      .before {
         content: "";
-        width: 50%;
+        display: block;
+        width: 100%;
         padding: 0.25rem;
         background-color: black;
       }
