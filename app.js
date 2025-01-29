@@ -20,7 +20,7 @@ function main() {
   ];
  
   let word = random(words).toUpperCase();
-  let guess = {
+  let GuessTracker = {
     all: 0,
     correctLetters: [random(word.split(''))],
     guess(word, userGuess) {
@@ -28,20 +28,20 @@ function main() {
     }
   };
 
-  word = new Word(word, guess);
+  word = new Word(word, GuessTracker);
   updateUI(word);
 
   let buttons = document.querySelectorAll(".keyboard button");
   for (let btn of buttons) {
     btn.addEventListener("click",  (event) => {
       if (word.attempt != 0) {
-        if (guess.guess(word, event.target.innerText)) {
+        if (GuessTracker.guess(word, event.target.innerText)) {
           word.attempt += 1;
-          guess['correctLetters'].push(event.target.innerText);
+          GuessTracker['correctLetters'].push(event.target.innerText);
         } else word.attempt -= 1;
 
-        word.guess = guess;
-        guess['all'] += 1;
+        word.GuessTracker = GuessTracker;
+        GuessTracker['all'] += 1;
         updateUI(word);
 
       } else if (word.attempt == 0) return;
@@ -57,11 +57,8 @@ function random(array) {
 }
 
 function updateUI(word) {
-  let gameBox = document.getElementById("gameBox");
-  let letterBox = document.getElementById("letterBox");
-
   updateInfoBar(word);
-
+  let letterBox = document.getElementById("letterBox");
   let wordCount = word.length;
   letterBox.innerHTML = "";
   
@@ -71,7 +68,7 @@ function updateUI(word) {
       return () => {
         element.setAttribute("class", `letter-${elementCount}`);
 
-        let validGuesses = word.guess.correctLetters;
+        let validGuesses = word.GuessTracker.correctLetters;
         if (validGuesses.includes(word.letters[elementCount]))
           element.innerHTML = word.letters[elementCount];
         
@@ -89,7 +86,7 @@ function updateInfoBar(word) {
   infoBarHTMLElement.querySelector(".attempt.progress_bar .before")
     .style.width = `${attemptInPercent}%`;
   infoBarHTMLElement.querySelector(".guesses")
-    .innerText = `Trial(s): ${word.guess.all}`;
+    .innerText = `Trial(s): ${word.GuessTracker.all}`;
 }
 
 function generateTag(tagname, count, set_) {
@@ -114,9 +111,9 @@ function resetBtns(buttons) {
 }
 
 class Word {
-  constructor(word, guess) {
+  constructor(word, GuessTracker) {
     this.letters = word.split('');
-    this.guess = guess;
+    this.GuessTracker = GuessTracker;
 
     this.attempt = word.length + 2;
   }
