@@ -2,6 +2,7 @@ let startBtn = document.getElementById("startBtn");
 
 startBtn.onclick = function () {
   resetBtns(document.querySelectorAll('.keyboard button'));
+  startBtn.innerText = "Reset";
   main();
 };
 
@@ -17,7 +18,7 @@ function main() {
     'Diamond', 'Plastic', 'Interest', 'Crypto', 'Danger',
     'Pen', 'Dog', 'Dread', 'Truncate', 'Victim', 'Commit',
   ];
-
+ 
   let word = random(words).toUpperCase();
   let guess = {
     all: 0,
@@ -32,7 +33,7 @@ function main() {
 
   let buttons = document.querySelectorAll(".keyboard button");
   for (let btn of buttons) {
-    btn.onclick = (event) => {
+    btn.addEventListener("click",  (event) => {
       if (word.attempt != 0) {
         if (guess.guess(word, event.target.innerText)) {
           word.attempt += 1;
@@ -40,13 +41,13 @@ function main() {
         } else word.attempt -= 1;
 
         word.guess = guess;
-        updateUI(word);
         guess['all'] += 1;
+        updateUI(word);
 
       } else if (word.attempt == 0) return;
 
       event.target.setAttribute('disabled', 'disabled');
-    }
+    });
   }
 }
 
@@ -83,7 +84,7 @@ function updateUI(word) {
 function updateInfoBar(word) {
   let infoBarHTMLElement = gameBox.querySelector('div.info');
   const totalAttempts = (word.length + 2);
-  const attemptInPercent = (word.attempt / totalAttempts) * 100;
+  const attemptInPercent = (word.attempt / totalAttempts) * 100; // Used for CSS progress bar
   
   infoBarHTMLElement.querySelector(".attempt.progress_bar .before")
     .style.width = `${attemptInPercent}%`;

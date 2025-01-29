@@ -121,16 +121,17 @@ main {
 .keyboard {
   display: flex;
   justify-content: center;
-  width: 90%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 500px;
   margin: 0 auto;
   border-bottom: none;
   background-color: whitesmoke;
   
   tr {
     display: flex;
-    width: 100%;
+    flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
   }
   
   button {
