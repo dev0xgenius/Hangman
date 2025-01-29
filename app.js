@@ -89,7 +89,7 @@ function updateInfoBar(word) {
   infoBarHTMLElement.querySelector(".attempt.progress_bar .before")
     .style.width = `${attemptInPercent}%`;
   infoBarHTMLElement.querySelector(".guesses")
-    .innerText = `Trial(s) ${word.guess.all}`;
+    .innerText = `Trial(s): ${word.guess.all}`;
 }
 
 function generateTag(tagname, count, set_) {
