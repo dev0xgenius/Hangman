@@ -1,8 +1,9 @@
 let startBtn = document.getElementById("startBtn");
 
 startBtn.onclick = function () {
-  resetBtns(document.querySelectorAll('.keyboard button'));
+  resetBtns(document.querySelectorAll('.keyboard input'));
   startBtn.innerText = "Reset";
+  
   main();
 };
 
@@ -19,37 +20,50 @@ function main() {
     'Pen', 'Dog', 'Dread', 'Truncate', 'Victim', 'Commit',
   ];
  
-  let word = random(words).toUpperCase();
+  let word = new Word(random(words).toUpperCase());
+  const randomLetter = random(word.letters);
+  
   let GuessTracker = {
     all: 0,
-    correctLetters: [random(word.split(''))],
-    guess(word, userGuess) {
-      return word.letters.includes(userGuess.toUpperCase());
+    correctLetters: word.letters.filter(letter => letter == randomLetter),
+    isValidGuess(word, guessedLetter) {
+      return word.letters.includes(guessedLetter.toUpperCase());
     }
   };
 
-  word = new Word(word, GuessTracker);
+  word.GuessTracker = GuessTracker;
   updateUI(word);
 
-  let buttons = document.querySelectorAll(".keyboard button");
-  for (let btn of buttons) {
-    btn.addEventListener("click",  (event) => {
-      if (word.attempt != 0) {
-        if (GuessTracker.guess(word, event.target.innerText)) {
-          word.attempt += 1;
-          GuessTracker['correctLetters'].push(event.target.innerText);
-        } else word.attempt -= 1;
-
-        word.GuessTracker = GuessTracker;
-        GuessTracker['all'] += 1;
-        updateUI(word);
-
-      } else if (word.attempt == 0) return;
-
-      event.target.setAttribute('disabled', 'disabled');
-    });
+  let keyboardBtns = document.querySelectorAll(".keyboard input");
+  for (let btn of keyboardBtns) btn.addEventListener("click", handleUserInput);
+  
+  function handleUserInput(event) {
+    if (word.attempt != 0 && word.attempt > 0) {
+      const guessedLetter = event.target.innerText;
+      const userHasGuessedAll = () => 
+        GuessTracker.correctLetters.length === word.letters.length;
+      
+      if (GuessTracker.isValidGuess(word, guessedLetter)) 
+      {
+        GuessTracker.correctLetters.push(guessedLetter);
+        if (userHasGuessedAll()) {
+          keyboardBtns.forEach(btn => btn.removeEventListener("click", handleUserInput));
+          alert("You've won the fucking game!! Congratulations...");
+        }
+        
+        word.attempt += 1;
+      } else word.attempt -= 1;
+    
+      word.GuessTracker = GuessTracker;
+      GuessTracker.all += 1;
+      updateUI(word);
+    
+    } else if (word.attempt == 0) return;
+    
+    event.target.setAttribute('disabled', 'disabled');
   }
 }
+
 
 function random(array) {
   let randomIndex = Math.floor(Math.random() * array.length);
@@ -59,20 +73,20 @@ function random(array) {
 function updateUI(word) {
   updateInfoBar(word);
   let letterBox = document.getElementById("letterBox");
-  let wordCount = word.length;
+  let numOfTags = word.length;
   letterBox.innerHTML = "";
   
   fillHTMLBox(
     letterBox, 
-    generateTag('span', wordCount, (element, elementCount) => {
+    generateTag('span', numOfTags, (tag, tagNumber) => {
       return () => {
-        element.setAttribute("class", `letter-${elementCount}`);
+        tag.setAttribute("class", `letter-${tagNumber}`);
 
         let validGuesses = word.GuessTracker.correctLetters;
-        if (validGuesses.includes(word.letters[elementCount]))
-          element.innerHTML = word.letters[elementCount];
+        if (validGuesses.includes(word.letters[tagNumber]))
+          tag.innerHTML = word.letters[tagNumber];
         
-        return element;
+        return tag;
       };
     })
   );
@@ -111,7 +125,7 @@ function resetBtns(buttons) {
 }
 
 class Word {
-  constructor(word, GuessTracker) {
+  constructor(word, GuessTracker=null) {
     this.letters = word.split('');
     this.GuessTracker = GuessTracker;
 
